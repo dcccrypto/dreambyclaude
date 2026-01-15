@@ -54,7 +54,7 @@ function shouldGenerate(lastUpdate: string | null): boolean {
   return minutesSinceUpdate >= requiredInterval
 }
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   // Verify this is a cron request
   if (!verifyCronRequest(request)) {
     return NextResponse.json(

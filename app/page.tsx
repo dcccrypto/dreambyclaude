@@ -9,8 +9,8 @@ export default function Home() {
           <Image
             src="/logo.png"
             alt="Dream by Claude"
-            width={64}
-            height={64}
+            width={120}
+            height={120}
             className="opacity-80"
             priority
           />
