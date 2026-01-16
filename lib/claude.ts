@@ -23,7 +23,23 @@ export async function generateParagraph(
   // Build context from recent paragraphs (last 3-5 for continuity)
   const recentParagraphs = previousParagraphs.slice(-5).join('\n\n')
   
-  const systemPrompt = `You are continuing a literary story that gradually becomes dreamlike over time. The story is a single, continuous narrative shared by all readers.
+  const isFirstParagraph = previousParagraphs.length === 0 && !lastParagraph
+
+  const systemPrompt = isFirstParagraph 
+    ? `You are beginning a new literary story that will gradually become dreamlike over time. The story is a single, continuous narrative shared by all readers.
+
+Recurring motifs that should appear throughout the story: ${motifs.join(', ')}
+
+CRITICAL RULES:
+- Write exactly ONE paragraph (50-150 words) to BEGIN the story
+- Set the scene with a character, place, and mood
+- Include concrete sensory details
+- Create an atmosphere of subtle mystery or unease
+- Never explain the concept or reference being an AI
+- Write in third person
+- Use literary, intentional prose
+- End the paragraph in a way that invites continuation`
+    : `You are continuing a literary story that gradually becomes dreamlike over time. The story is a single, continuous narrative shared by all readers.
 
 Current drift level: ${currentDrift.toFixed(2)} (${driftDescription})
 
@@ -44,7 +60,9 @@ CRITICAL RULES:
 ${currentDrift > 0.3 ? `Note: The story is becoming more dreamlike. Introduce subtle distortions, unexpected connections, or altered perceptions, but maintain readability and concrete detail.` : ''}
 ${currentDrift > 0.6 ? `Note: The story is now strongly dreamlike. Events may be surreal, but each paragraph must still contain concrete actions and sensory details. Maintain the illusion of a coherent narrative.` : ''}`
 
-  const userPrompt = `Continue the story with one paragraph. Here is the most recent paragraph:
+  const userPrompt = isFirstParagraph
+    ? `Begin the story now. Write the opening paragraph.`
+    : `Continue the story with one paragraph. Here is the most recent paragraph:
 
 ${lastParagraph}
 
