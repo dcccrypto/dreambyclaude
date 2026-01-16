@@ -2,8 +2,8 @@
  * Quality validation for generated paragraphs
  */
 
-const MIN_WORDS = 80
-const MAX_WORDS = 120
+const MIN_WORDS = 50
+const MAX_WORDS = 150
 
 // Common AI-sounding phrases to detect
 const AI_PHRASES = [

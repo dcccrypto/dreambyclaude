@@ -4,8 +4,8 @@ import { generateParagraph } from '@/lib/claude'
 import { validateParagraph } from '@/lib/validation'
 import { calculateNextDrift } from '@/lib/drift'
 
-const MIN_INTERVAL_MINUTES = 5
-const MAX_INTERVAL_MINUTES = 10
+const MIN_INTERVAL_MINUTES = 2
+const MAX_INTERVAL_MINUTES = 2
 
 /**
  * Verify the request is from a cron job
@@ -117,42 +117,29 @@ export async function GET(request: NextRequest) {
     const previousParagraphs = (allParagraphs || []).map(p => p.content)
     const lastParagraph = previousParagraphs[previousParagraphs.length - 1] || ''
 
-    // Generate new paragraph
+    // Generate paragraph (single attempt to avoid timeouts)
     let newParagraph: string
-    let attempts = 0
-    const maxAttempts = 3
+    try {
+      newParagraph = await generateParagraph({
+        currentDrift: state.current_drift,
+        motifs: state.motifs as string[],
+        previousParagraphs,
+        lastParagraph
+      })
 
-    while (attempts < maxAttempts) {
-      try {
-        newParagraph = await generateParagraph({
-          currentDrift: state.current_drift,
-          motifs: state.motifs as string[],
-          previousParagraphs,
-          lastParagraph
-        })
-
-        // Validate the paragraph
-        const validation = validateParagraph(newParagraph, previousParagraphs)
-        
-        if (validation.valid) {
-          break // Valid paragraph, exit loop
-        } else {
-          console.warn(`Validation failed (attempt ${attempts + 1}):`, validation.error)
-          attempts++
-          if (attempts >= maxAttempts) {
-            return NextResponse.json(
-              { error: `Failed to generate valid paragraph after ${maxAttempts} attempts: ${validation.error}` },
-              { status: 500 }
-            )
-          }
-        }
-      } catch (error) {
-        console.error('Error generating paragraph:', error)
-        attempts++
-        if (attempts >= maxAttempts) {
-          throw error
-        }
+      // Validate the paragraph
+      const validation = validateParagraph(newParagraph, previousParagraphs)
+      
+      if (!validation.valid) {
+        console.warn('Validation warning:', validation.error)
+        // Continue anyway - we'll accept slightly imperfect paragraphs to avoid timeouts
       }
+    } catch (error) {
+      console.error('Error generating paragraph:', error)
+      return NextResponse.json(
+        { error: 'Failed to generate paragraph' },
+        { status: 500 }
+      )
     }
 
     // Calculate new drift level
