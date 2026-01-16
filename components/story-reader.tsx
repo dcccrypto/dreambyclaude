@@ -34,24 +34,24 @@ export function StoryReader() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-muted-foreground">Loading...</div>
+      <div className="flex items-center justify-center py-20">
+        <div className="text-muted-foreground font-serif italic">Loading the dream...</div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-destructive">Error: {error}</div>
+      <div className="flex items-center justify-center py-20">
+        <div className="text-destructive font-sans text-sm">Error: {error}</div>
       </div>
     )
   }
 
   if (paragraphs.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-muted-foreground">The story has not begun yet.</div>
+      <div className="flex items-center justify-center py-20">
+        <div className="text-muted-foreground font-serif italic">The story has not begun yet...</div>
       </div>
     )
   }
