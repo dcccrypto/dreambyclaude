@@ -47,12 +47,12 @@ export default function Home() {
         <StoryReader />
 
         {/* Footer */}
-        <footer className="mt-16 pt-8 border-t border-foreground/10 text-center">
+        <footer className="mt-16 pt-8 border-t border-foreground/10 text-center relative z-10">
           <p className="text-sm text-muted-foreground font-sans">
             The story is still being written.
           </p>
           <p className="mt-2 text-xs text-muted-foreground/60 font-sans">
-            Updates every 2 minutes · Powered by Claude
+            Powered by Claude
           </p>
         </footer>
       </main>
