@@ -20,7 +20,7 @@ interface Particle {
 export function AmbientParticles({ driftLevel }: AmbientParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -83,7 +83,7 @@ export function AmbientParticles({ driftLevel }: AmbientParticlesProps) {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
-      if (animationRef.current) {
+      if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current)
       }
     }
