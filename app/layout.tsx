@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title: "Dream by Claude",
   description: "An infinite shared story that slowly dissolves into dream logic",
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
     apple: '/logo.png',
   },
 };
