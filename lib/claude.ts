@@ -30,7 +30,7 @@ Current drift level: ${currentDrift.toFixed(2)} (${driftDescription})
 Recurring motifs that should appear throughout the story: ${motifs.join(', ')}
 
 CRITICAL RULES:
-- Write exactly ONE paragraph (80-120 words)
+- Write exactly ONE paragraph that MUST be between 80-120 words. This is mandatory - count your words carefully.
 - Include at least one concrete action or sensory detail
 - Continue directly from the previous paragraph
 - Maintain continuity with characters, places, and emotional tone
@@ -42,6 +42,8 @@ CRITICAL RULES:
 - Avoid abstract filler or excessive metaphor stacking
 - Keep sentences clear and readable
 - The surrealism should emerge through events and perception, not language excess
+
+WORD COUNT REQUIREMENT: Your paragraph MUST contain at least 80 words and no more than 120 words. Paragraphs shorter than 80 words will be rejected.
 
 ${currentDrift > 0.3 ? `Note: The story is becoming more dreamlike. Introduce subtle distortions, unexpected connections, or altered perceptions, but maintain readability and concrete detail.` : ''}
 ${currentDrift > 0.6 ? `Note: The story is now strongly dreamlike. Events may be surreal, but each paragraph must still contain concrete actions and sensory details. Maintain the illusion of a coherent narrative.` : ''}`
@@ -65,7 +67,7 @@ Write the next paragraph now.`
       },
       body: JSON.stringify({
         model: 'anthropic/claude-3.5-sonnet',
-        max_tokens: 300,
+        max_tokens: 400,
         temperature: 0.8,
         messages: [
           {

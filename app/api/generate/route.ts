@@ -120,7 +120,7 @@ export async function GET(request: NextRequest) {
     // Generate new paragraph
     let newParagraph: string
     let attempts = 0
-    const maxAttempts = 2
+    const maxAttempts = 3
 
     while (attempts < maxAttempts) {
       try {
