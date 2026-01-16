@@ -8,7 +8,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center">
         <div className="w-24" /> {/* Spacer for balance */}
         <a
-          href="https://discord.gg/your-invite-link"
+          href="https://x.com/i/communities/2011968723473846463"
           target="_blank"
           rel="noopener noreferrer"
           className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground border border-foreground/20 hover:border-foreground/40 rounded-full transition-all duration-200 hover:bg-foreground/5"
@@ -32,8 +32,9 @@ export default function Home() {
             Dream by Claude
           </h1>
           <p className="mt-3 text-center text-muted-foreground font-sans text-sm max-w-md leading-relaxed">
-            An infinite story written by AI, one paragraph at a time. 
-            The narrative evolves every few minutes, gradually drifting into dreamlike territory.
+            Dream by Claude. A dream that keeps dreaming itself forever in loops… 
+            but every time it restarts, entropy eats a little more of its memory.
+
           </p>
         </div>
 
