@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase'
 
 export async function GET() {
   try {
-    // Fetch paragraphs
+    // Fetch paragraphs with drift_level
     const { data: paragraphs, error: paragraphsError } = await supabase
       .from('paragraphs')
       .select('*')
@@ -27,10 +27,24 @@ export async function GET() {
       console.error('Error fetching story state:', stateError)
     }
 
+    // Get drift from story_state, or from latest paragraph as fallback
+    const latestParagraph = paragraphs && paragraphs.length > 0 
+      ? paragraphs[paragraphs.length - 1] 
+      : null
+    
+    const driftLevel = storyState?.current_drift 
+      ?? latestParagraph?.drift_level 
+      ?? 0
+
+    // Get last update from story_state, or from latest paragraph's created_at
+    const lastUpdate = storyState?.last_update 
+      ?? latestParagraph?.created_at 
+      ?? null
+
     return NextResponse.json({
       paragraphs: paragraphs || [],
-      driftLevel: storyState?.current_drift ?? 0,
-      lastUpdate: storyState?.last_update ?? null
+      driftLevel,
+      lastUpdate
     })
   } catch (error) {
     console.error('Unexpected error:', error)

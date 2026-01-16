@@ -46,13 +46,23 @@ export function StoryReader() {
 
   // Countdown timer
   useEffect(() => {
-    if (!lastUpdate) return
-
     const updateCountdown = () => {
+      if (!lastUpdate) {
+        // No last update, show full countdown
+        setCountdown(120)
+        return
+      }
+
       const lastUpdateTime = new Date(lastUpdate).getTime()
       const now = Date.now()
       const elapsed = (now - lastUpdateTime) / 1000
-      const remaining = Math.max(0, 120 - elapsed)
+      
+      // Calculate remaining time in current 2-minute cycle
+      // If more than 2 mins have passed, calculate time into next cycle
+      const cycleTime = 120 // 2 minutes
+      const timeIntoCycle = elapsed % cycleTime
+      const remaining = cycleTime - timeIntoCycle
+      
       setCountdown(Math.floor(remaining))
     }
 
@@ -150,7 +160,7 @@ export function StoryReader() {
             <div className="w-16 h-1.5 bg-foreground/10 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-full transition-all duration-1000"
-                style={{ width: `${driftLevel * 100}%` }}
+                style={{ width: `${Math.max(5, driftLevel * 100)}%` }}
               />
             </div>
             <span className="text-[10px] opacity-70">{getDriftLabel(driftLevel)}</span>
