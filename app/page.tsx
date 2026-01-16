@@ -8,7 +8,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center">
         <div className="w-24" /> {/* Spacer for balance */}
         <a
-          href="https://x.com/i/communities/2011968723473846463"
+          href="https://x.com/i/communities/2011982330425205174"
           target="_blank"
           rel="noopener noreferrer"
           className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground border border-foreground/20 hover:border-foreground/40 rounded-full transition-all duration-200 hover:bg-foreground/5"
